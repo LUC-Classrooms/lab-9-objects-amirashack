@@ -6,16 +6,26 @@ var myObj1, myObj2; // global variables to hold object instances
 
 function setup() {
   createCanvas(500, 350);
+  
   /* 
   add lines here to create 2 new objects using the class constructor below.
   hint: use the "new" keyword with the constructor function MyClass()
   assign the result of this function to myObj1 and then to myObj2
-  */
+  */ 
+  myObj1 = new MyClass (100, 100);
+  myObj2 = new MyClass (400, 200);
+  //console.log(myObj1);
+
 }
 
 function draw() {
   background(200);
   // add code here to make your objects move and display on canvas
+
+  myObj1.display(); // the display method will draw the object on the canvas
+  myObj1.move(); // the move method will update the xy location of the object on the canvas
+  myObj2.display();
+  myObj2.move();
   
 }
 
@@ -29,13 +39,24 @@ function MyClass(tempX, tempY){
   this.xSpeed = random (-1.0, 1.0); // each instance moves in a different direction
   this.ySpeed = random (-1.0, 1.0);
   this.color = color(random(255), random(255), random(255));
+  // the variable "this" points out a specific variable, instead of making it a global argument
   
   //some basic object methods
   this.move = function (){
     this.x += this.xSpeed;
     this.y += this.ySpeed;
+
     
     //maybe add some code to keep it on the canvas ...
+    // ||
+
+    if(this.x > width || this.x < 0){
+      this.xSpeed *= -1;
+    }
+
+    if(this.y > height || this.y < 0){
+      this.ySpeed *= -1;
+    }
   }
   
   this.display = function (){
@@ -44,8 +65,21 @@ function MyClass(tempX, tempY){
     translate(this.x, this.y); //shift the canvas (0,0) to the object location
     fill(this.color); // set the color
     ellipse(0, 0, this.d/2, this.d);
+    rotate(PI / 2);
+    ellipse(0, 0, this.d/2, this.d);
+    rotate(QUARTER_PI);
+    ellipse(0, 0, this.d/2, this.d);
+    rotate(HALF_PI);
+    ellipse(0, 0, this.d/2, this.d);
+    rotate(PI / 4);
+    fill("yellow");
+    ellipse(0, 0, this.d/2, this.d/2);
+    
+
+
     // note that when you want to use the objects properties, you need to use "this"
     // add more drawing code to make your image a little more complex
+    
 
     pop(); // delete the tansparency layer after drawing the image
   }
